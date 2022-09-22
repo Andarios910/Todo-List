@@ -1,46 +1,87 @@
-// import './App.css';
-import TodoHeader from "./TodoHeader";
 import pic from '../utils/search-icon2.svg'
-import Button from "./Button";
-import ItemList from "./ItemList";
 import Data from "../utils/data.json"
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { Outlet, Link, useNavigate, useLocation } from 'react-router-dom'
+import TodoInput from "./TodoInput";
+import TodoList from "./TodoList";
 
 function App() {
+  const navigate = useNavigate();
+  const location = useLocation();
   const [dataList, setDataList] = useState(Data);
+  const [itemToShow, setItemToShow] = useState('all')
 
-  const onDelete = (id) => {
-
-  }
-
-  const setComplete = (id) => {
+  const handleChange = () => {
 
   }
+
+  const handleSubmit = () => {
+    
+  }
+
+  const handleEdit = () => {
+    
+  }
+
+  const handleDoneTask = (id, complete) => {
+    const filteredItems = dataList.map(item => {
+      item.id === id && (item.complete = !item.complete)
+      return item;
+    })
+    setDataList(filteredItems);
+  }
+
+  const handleDeleteDoneTasks = () => {
+    const filteredItems = dataList.filter(item => item.complete === false);
+    setDataList(filteredItems)
+  }
+
+  const updateTodosToShow = (string) => {
+    setItemToShow(string);
+  }
+
+  const clearList = () => {
+    setDataList([])
+  }
+
+  const handleDelete = (id) => {
+    const filteredItems = dataList.filter(item => item.id !== id);
+    setDataList(filteredItems)
+  }
+
+  let items = []
+  items = dataList
+  if(itemToShow === "all") {
+    items = dataList;
+  } else if (itemToShow === "todo") {
+    items = dataList.filter(item => !item.complete)
+  } else if (itemToShow === "done") {
+    items = dataList.filter(item => item.complete)
+  }
+
+
+  useEffect(() => {
+    
+  })
 
   return (
     <div className='container w-3/4 mx-auto mt-8'>
-        <div className='border rounded-lg shadow-lg p-10'>
-          <TodoHeader image={pic} />
+      <div className="border rounded-lg shadow-lg p-10">
+        <div className="className='border border-gray-600 p-5'">
+          <TodoInput 
+            handleChange={handleChange}
+            handleSubmit={handleSubmit} />
         </div>
-        <h1 className='text-center text-xl font-medium mt-5'>TodoList</h1>
-        <div className='flex justify-between mt-10'>
-          <Button width='w-64' valueButton='All' value='all' color='bg-blue-500' colorHover='hover:bg-blue-700'  />
-          <Button width='w-64' valueButton='Done' value='done'  color='bg-blue-500' colorHover='hover:bg-blue-700' />
-          <Button width='w-64' valueButton='Todo' value='todo' color='bg-blue-500' colorHover='hover:bg-blue-700'/>
-        </div>
-        <div>
-        {
-          dataList.map((item) => (
-            <ItemList 
-              key={item.id}
-              id={item.id}
-              task={item.task}
-              complete={item.complete}
-              onDelete={onDelete}
-              setComplete={setComplete}
-              />
-          ))
-        }
+        <TodoList 
+            dataList={items}
+            // filterDoneTask={filterDoneTask}
+            clearList={clearList}
+            handleDelete={handleDelete}
+            handleEdit={handleEdit}
+            handleDoneTask={handleDoneTask}
+            handleDeleteDoneTasks={handleDeleteDoneTasks}
+            updateTodosToShow={updateTodosToShow}
+        />
       </div>
     </div>
   );
