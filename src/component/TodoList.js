@@ -15,7 +15,7 @@ export default function TodoList({ dataList, handleDelete, handleEdit, handleDon
             <div>
                 {
                     dataList.map((item) => (
-                    <ItemList 
+                    <ItemList
                         key={item.id}
                         id={item.id}
                         task={item.task}

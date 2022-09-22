@@ -15,3 +15,11 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.iconPen {
+  color: #f8c133;
+}
+
+.iconDelete {
+  color: #d7374d;
+}

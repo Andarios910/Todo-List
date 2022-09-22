@@ -1,4 +1,3 @@
-import pic from '../utils/search-icon2.svg'
 import Data from "../utils/data.json"
 import { useEffect, useState } from "react";
 import { Outlet, Link, useNavigate, useLocation } from 'react-router-dom'
@@ -70,7 +69,9 @@ function App() {
         <div className="className='border border-gray-600 p-5'">
           <TodoInput 
             handleChange={handleChange}
-            handleSubmit={handleSubmit} />
+            handleSubmit={handleSubmit} 
+            onClick={() => navigate('/add')}
+          />
         </div>
         <TodoList 
             dataList={items}
