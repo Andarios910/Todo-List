@@ -16,10 +16,19 @@ code {
     monospace;
 }
 
+.fa-solid {
+  color: white;
+}
+
 .iconPen {
   color: #f8c133;
 }
 
 .iconDelete {
   color: #d7374d;
+}
+
+.icon-search {
+  color: white;
+  margin-top: 4px;
 }

@@ -1,14 +1,12 @@
 import Data from "../utils/data.json"
 import { useEffect, useState } from "react";
-import { Outlet, Link, useNavigate, useLocation } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import TodoInput from "./TodoInput";
 import TodoList from "./TodoList";
 
-function App() {
-  const navigate = useNavigate();
-  const location = useLocation();
-  const [dataList, setDataList] = useState(Data);
+function TodoApp( {dataList, setDataList}) {
   const [itemToShow, setItemToShow] = useState('all')
+  const navigate = useNavigate();
 
   const handleChange = () => {
 
@@ -18,8 +16,8 @@ function App() {
     
   }
 
-  const handleEdit = () => {
-    
+  const handleEdit = (id) => {
+    navigate(`/edit/${id}`)
   }
 
   const handleDoneTask = (id, complete) => {
@@ -48,6 +46,15 @@ function App() {
     setDataList(filteredItems)
   }
 
+  const addNewTask = () => {
+    navigate("/add")
+    // setDataList([...dataList, location.state])
+  }
+
+  useEffect(() => {
+
+  }, [])
+
   let items = []
   items = dataList
   if(itemToShow === "all") {
@@ -58,11 +65,6 @@ function App() {
     items = dataList.filter(item => item.complete)
   }
 
-
-  useEffect(() => {
-    
-  })
-
   return (
     <div className='container w-3/4 mx-auto mt-8'>
       <div className="border rounded-lg shadow-lg p-10">
@@ -70,7 +72,8 @@ function App() {
           <TodoInput 
             handleChange={handleChange}
             handleSubmit={handleSubmit} 
-            onClick={() => navigate('/add')}
+            // onClick={() => navigate('/add')}
+            onClick={addNewTask}
           />
         </div>
         <TodoList 
@@ -88,4 +91,4 @@ function App() {
   );
 }
 
-export default App;
+export default TodoApp;
