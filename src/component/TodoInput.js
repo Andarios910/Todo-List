@@ -2,12 +2,12 @@ import React from 'react'
 import Button from './Button'
 import { FaSearch } from 'react-icons/fa'
 
-export default function TodoInput({item, itemSearch, handleChange, onClick, searchTask}) {
+export default function TodoInput({item, handleChange, onClick, searchTask, handleSubmit}) {
     return (
         <>
             <h1 className='text-center text-xl font-medium mb-4'>TodoSearch</h1>
             <div className='w-full border border-gray-600 p-5'>
-                <form>
+                <form onSubmit={handleSubmit}>
                     <div className='flex w-1/2'>
                         <div className='rounded-l-sm bg-cyan-500 p-2'>
                             <i><FaSearch className='icon-search'/></i>
