@@ -1,19 +1,21 @@
-import Data from "../utils/data.json"
 import { useEffect, useState } from "react";
-import { useNavigate, useLocation } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import TodoInput from "./TodoInput";
 import TodoList from "./TodoList";
 
 function TodoApp( {dataList, setDataList}) {
+
   const [itemToShow, setItemToShow] = useState('all')
+  const [search, setSearch] = useState('');
+  const [test, setTest] = useState('');
   const navigate = useNavigate();
 
-  const handleChange = () => {
-
+  const handleChange = (value) => {
+    setSearch(value);
   }
 
-  const handleSubmit = () => {
-    
+  const searchTask = (string) => {
+    setItemToShow(string);
   }
 
   const handleEdit = (id) => {
@@ -48,12 +50,7 @@ function TodoApp( {dataList, setDataList}) {
 
   const addNewTask = () => {
     navigate("/add")
-    // setDataList([...dataList, location.state])
   }
-
-  useEffect(() => {
-
-  }, [])
 
   let items = []
   items = dataList
@@ -70,14 +67,17 @@ function TodoApp( {dataList, setDataList}) {
       <div className="border rounded-lg shadow-lg p-10">
         <div className="className='border border-gray-600 p-5'">
           <TodoInput 
-            handleChange={handleChange}
-            handleSubmit={handleSubmit} 
-            // onClick={() => navigate('/add')}
+            handleChange={(e) => handleChange(e.target.value)}
+            // handleSubmit={handleSubmit} 
+            searchTask={updateTodosToShow}
+            // searchInput={search}
+            // searchTask={handleSubmit}
             onClick={addNewTask}
           />
         </div>
         <TodoList 
             dataList={items}
+            keyword={search}
             // filterDoneTask={filterDoneTask}
             clearList={clearList}
             handleDelete={handleDelete}

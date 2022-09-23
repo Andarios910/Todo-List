@@ -3,7 +3,16 @@ import ItemList from './ItemList'
 import Button from './Button'
 import DeleteButton from './DeleteButton'
 
-export default function TodoList({ dataList, handleDelete, handleEdit, handleDoneTask, updateTodosToShow, handleDeleteDoneTasks, clearList}) {
+export default function TodoList({ dataList, keyword, handleDelete, handleEdit, handleDoneTask, updateTodosToShow, handleDeleteDoneTasks, clearList}) {
+    if (dataList.length > 0) {
+        dataList = dataList.filter(item => {
+            if (keyword == " ") {
+                return item;
+            }
+            return item.task.toLowerCase().includes(keyword.toLowerCase())
+        })
+    }
+
     return (
         <div>
             <h1 className='text-center text-xl font-medium mt-5'>TodoList</h1>
@@ -13,17 +22,17 @@ export default function TodoList({ dataList, handleDelete, handleEdit, handleDon
                 <Button width='w-64' valueButton='Todo' value='todo' color='bg-blue-500' colorHover='hover:bg-blue-700' onClick={() => updateTodosToShow('todo')} />
             </div>
             <div>
-                {
+                { 
                     dataList.map((item) => (
-                    <ItemList
-                        key={item.id}
-                        id={item.id}
-                        task={item.task}
-                        complete={item.complete}
-                        handleDelete={() => handleDelete(item.id)}
-                        handleEdit={() => handleEdit(item.id)}
-                        handleDoneTask={handleDoneTask}
-                    />
+                        <ItemList
+                            key={item.id}
+                            id={item.id}
+                            task={item.task}
+                            complete={item.complete}
+                            handleDelete={() => handleDelete(item.id)}
+                            handleEdit={() => handleEdit(item.id)}
+                            handleDoneTask={handleDoneTask}
+                        />
                     ))
                 } 
             </div>
